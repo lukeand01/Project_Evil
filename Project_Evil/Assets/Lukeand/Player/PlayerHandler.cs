@@ -6,9 +6,11 @@ public class PlayerHandler : MonoBehaviour
 {
    public static PlayerHandler Instance;
 
-    [HideInInspector] public PlayerMove move;
-    [HideInInspector] public PlayerController controller;
-    [HideInInspector] public PlayerCombat combat;
+     public PlayerMove move { get; private set; }
+     public PlayerController controller { get; private set; }
+     public PlayerCombat combat { get; private set; }
+     public EntityHandler entityHandler { get; private set; }
+
 
     private void Awake()
     {
@@ -17,6 +19,8 @@ public class PlayerHandler : MonoBehaviour
         move = GetComponent<PlayerMove>();
         controller = GetComponent<PlayerController>(); 
         combat = GetComponent<PlayerCombat>();
+
+        entityHandler = GetComponent<EntityHandler>();
     }
 
 

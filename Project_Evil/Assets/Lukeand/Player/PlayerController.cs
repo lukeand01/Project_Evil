@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.GraphicsBuffer;
@@ -20,6 +21,8 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         MovementInput();
+        CombatInput();
+        InventoryInput();
     }
 
     void MovementInput()
@@ -37,16 +40,28 @@ public class PlayerController : MonoBehaviour
     {
         if(Input.GetKey(key.GetKey(KeyType.Shoot)))
         {
-
+            handler.combat.Shoot();
         }
 
         if (Input.GetKey(key.GetKey(KeyType.Aim)))
         {
-
+            handler.combat.Aim();
+        }
+        else
+        {
+            handler.combat.StopAiming();
         }
 
 
     }
 
+    void InventoryInput()
+    {
+        if (Input.GetKeyDown(key.GetKey(KeyType.Inventory)))
+        {
+            //call this.
+            UIHolder.instance.inventory.Open();
+        }
+    }
 
 }

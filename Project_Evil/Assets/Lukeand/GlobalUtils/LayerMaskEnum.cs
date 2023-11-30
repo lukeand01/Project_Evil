@@ -8,6 +8,7 @@ public enum LayerMaskEnum
      Player = 3,
      Interact = 6,
      Enemy = 7,
-     Immune = 8
+     Immune = 8,
+     Wall = 9
     
 }
