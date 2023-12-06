@@ -20,6 +20,8 @@ public class PlayerInventory : MonoBehaviour
         UIHolder.instance.inventory.UpdateUnitList(inventory.inventoryList);
     }
 
+
+
     public int TryToAddItem(ItemClass item) => inventory.TryToAddItem(item);
 
     
