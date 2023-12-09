@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: UsableA
   m_EditorClassIdentifier: 
   itemName: Usable A
-  stackLimit: 0
+  itemDescription: This is usable A
+  stackLimit: 5
   itemSprite: {fileID: 21300000, guid: c5594e02c39553f46b1fbde89cea1170, type: 3}
   itemType: 0
   useTime: 0

@@ -17,12 +17,32 @@ public class PlayerInventory : MonoBehaviour
 
     private void Start()
     {
+
+
+        foreach (ItemClass item in initialItem)
+        {
+
+            for (int i = 0; i < item.quantity; i++)
+            {
+                int success = TryToAddItem(item);
+                if (success > 0)
+                {
+                    Debug.Log("there was something wrong here");
+                }
+            }
+           
+            
+        }
+
         UIHolder.instance.inventory.UpdateUnitList(inventory.inventoryList);
     }
 
 
 
-    public int TryToAddItem(ItemClass item) => inventory.TryToAddItem(item);
+    public int TryToAddItem(ItemClass item)
+    {
+       return inventory.TryToAddItem(item);
+    }
 
     
 }

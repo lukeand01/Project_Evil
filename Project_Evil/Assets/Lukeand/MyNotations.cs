@@ -37,9 +37,17 @@
 
 
 //TASKS 
-//can drag item. with left button.
-//can use item. with right button.
+///can drag item. with left button.
+///can use item. with right button.
+//can describe the itens
 //can equip item.
+//
+
+//TASK
+//can shoot the gun and it works
+//can reload gun.
+//can use ammo
+
 
 //fix player rotation going crazy. 
 //fix the dotteed line. it doesnt look good.

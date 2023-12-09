@@ -6,62 +6,27 @@ using UnityEngine.InputSystem;
 
 public class PlayerCombat : MonoBehaviour
 {
-    [Separator("DEBUG GUNS")]
-    [SerializeField] ItemGunData debugGun;
-    [SerializeField] ItemGunData debugPistol;
-    [SerializeField] ItemGunData debugShotgun;
-    [SerializeField] ItemGunData debugRifle;
-
-
-    [Separator("Line")]
-    [SerializeField] GameObject aim;
-
-
-
-
-
-
-    Dictionary<GunType, List<ItemClass>> ammoDictionary = new();
-
-    [SerializeField] Transform shootingPos;
-
-
     PlayerHandler handler;
 
+
+    [Separator("CLASSES")]
+    GunClass equippedGun;
+
+
+    [Separator("AMMO")]
+    Dictionary<GunType, List<ItemClass>> ammoDictionary = new();
+
+
+    [Separator("REFERENCES")]
+    [SerializeField] Transform shootingPos; //where the bullet comes from
+    [SerializeField] GameObject aim;
 
     private void Awake()
     {
         handler = GetComponent<PlayerHandler>();
-        debugGun = debugPistol;
     }
-    private void FixedUpdate()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            debugGun = debugPistol;
-        }
+    
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            debugGun = debugShotgun;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            debugGun = debugRifle;
-        }
-
-        
-    }
-
-  
-   void RendLine()
-    {
-        //aimLineRend.enabled = true;
-        //aimLineRend.positionCount = 2;
-        //aimLineRend.SetPosition(0, transform.position);
-        //aimLineRend.SetPosition(1, transform.position + GetGunPos());
-    }
     public void Aim()
     {
         //we need to lmit the aim by the range of the gun.
@@ -75,12 +40,8 @@ public class PlayerCombat : MonoBehaviour
 
     public void Shoot()
     {
-        //shoot a projectile.
-        //
-
-        if (debugGun == null) return;
-
-
+ 
+        /*
         for (int i = 0; i < debugGun.bulletPerShot; i++)
         {
             Vector3 offset = Vector3.zero;
@@ -95,14 +56,25 @@ public class PlayerCombat : MonoBehaviour
             newObject.SetUp(ownID, AttackDir(), 5, debugGun.bulletSpeed);
             newObject.SetDestroySelf(debugGun.range);
         }
-
+        */
         
     }
 
-    public void ChangeGun(ItemGunData data)
+    #region CHANGE
+    public void ChangeGun(GunClass newGun)
     {
-        debugGun = data;
+        
     }
+    public void ChangeSword()
+    {
+
+    }
+    public void ChangeShield()
+    {
+
+    }
+
+    #endregion
 
     #region AMMO
 
@@ -146,13 +118,13 @@ public class PlayerCombat : MonoBehaviour
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
 
-        float distance = debugGun.range;
+        float distance = 5;
 
         RaycastHit2D ray = Physics2D.Raycast(transform.position, mousePos.normalized, distance, LayerMask.GetMask(LayerMaskEnum.Wall.ToString()));
 
         if(ray.collider != null)
         {
-            Debug.Log("hit something " + ray.collider.name);
+
             distance = ray.distance;
         }
 
@@ -164,5 +136,7 @@ public class PlayerCombat : MonoBehaviour
     }
 
     #endregion
+
+
 
 }

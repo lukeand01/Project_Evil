@@ -34,7 +34,11 @@ public class InventoryClass
         while(item.quantity > 0)
         {
             brake++;
-            if (brake > 1000) break;
+            if (brake > 1000)
+            {
+                Debug.Log("broke here in first");
+                break;
+            }
 
             if (stackableList.Count > 0)
             {
@@ -61,6 +65,15 @@ public class InventoryClass
     {
         int diff = rightList[0].GetAmountToStack();
         float brake = 0;
+
+        if(item.quantity <= 0)
+        {
+            Debug.Log("too little quantity");
+        }
+        if(diff <= 0)
+        {
+            rightList.RemoveAt(0);
+        }
 
         while (item.quantity > 0 && diff > 0)
         {
@@ -90,6 +103,7 @@ public class InventoryClass
         inventoryList[index].ReceiveNewData(item.data);
         item.DecreaseQuantity();
         if (item.quantity > 0) list.Add(inventoryList[index]);
+
     }
 
     List<ItemClass> GetStackableList(ItemData data)

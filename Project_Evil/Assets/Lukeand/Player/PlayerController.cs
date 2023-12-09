@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
 
     void CombatInput()
     {
+
         if(Input.GetKey(key.GetKey(KeyType.Shoot)))
         {
             handler.combat.Shoot();
