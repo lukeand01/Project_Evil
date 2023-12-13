@@ -21,6 +21,10 @@ public class InventoryUI : MonoBehaviour
     float totalUseCooldown;
 
     public InventoryDraggableHandler draggableHandler { get; private set; }
+    public InventoryDescriptionUI descriptionUI { get; private set; }
+    public InventoryCraftUI craftUI { get; private set; }   
+
+
 
     bool isStuckInHoldMouse;
 
@@ -32,10 +36,14 @@ public class InventoryUI : MonoBehaviour
     {
         chargingModifier = 0.15f;
         total = 5;
-        totalUseCooldown = 0f;
+        totalUseCooldown = 0.5f;
         currentUseCooldown = totalUseCooldown;
         holder = transform.GetChild(0).gameObject;
+
+
         draggableHandler = GetComponent<InventoryDraggableHandler>();
+        descriptionUI = GetComponent<InventoryDescriptionUI>(); 
+        craftUI = GetComponent<InventoryCraftUI>(); 
     }
 
     private void FixedUpdate()
@@ -52,24 +60,33 @@ public class InventoryUI : MonoBehaviour
         }
 
 
+        HandleUseLogic();
+        
+        
+    }
+
+    void HandleUseLogic()
+    {
         InventoryUnit currentUsingItem = draggableHandler.GetItemToBeUsed();
 
-        if(!Input.GetMouseButton(1) && isStuckInHoldMouse)
+        if (!Input.GetMouseButton(1) && isStuckInHoldMouse)
         {
             isStuckInHoldMouse = false;
         }
 
 
-        if(currentUseCooldown < totalUseCooldown)
+        if (currentUseCooldown < totalUseCooldown)
         {
 
             currentUseCooldown += 0.01f;
         }
 
-        if(currentUsingItem != null && !isStuckInHoldMouse)
+        if (currentUsingItem != null)
         {
 
-            if(currentUseCooldown >= totalUseCooldown)
+            if (!currentUsingItem.item.IsInteractable()) return;
+
+            if (currentUseCooldown >= totalUseCooldown && !isStuckInHoldMouse)
             {
                 if (Input.GetMouseButton(1))
                 {
@@ -88,8 +105,6 @@ public class InventoryUI : MonoBehaviour
                 StopUsingItem(currentUsingItem);
             }
         }
-        
-        
     }
 
     void UsingItem(InventoryUnit refUnit)
@@ -107,12 +122,12 @@ public class InventoryUI : MonoBehaviour
 
     void UseItem(InventoryUnit refUnit)
     {
+        refUnit.item.UseItem();
 
         isStuckInHoldMouse = true;
         currentUseCooldown = 0;
-        current = 0;
+        //current = 0;
         refUnit.AnimateItemUse();
-        refUnit.item.DecreaseQuantity();
     }
 
 
@@ -170,9 +185,18 @@ public class InventoryUI : MonoBehaviour
     }
     
    
-    
+    public void Hover(InventoryUnit unit)
+    {
+        draggableHandler.Hover(unit);
+        descriptionUI.Describe(unit);
+    }
 
-
+    public void StopHover()
+    {
+        current = 0;
+        draggableHandler.StopHover();
+        descriptionUI.StopDescribe();
+    }
 
     
 }

@@ -10,7 +10,8 @@ public class ItemClass
     public ItemData data;
     public int quantity;
 
-    public GunClass gun;
+    public GunClass gun { get; private set; } = null;
+    public ToolClass tool { get; private set; } = null;
 
     public bool IsEquipped { get; private set; } //if this is ever case then we show something.
 
@@ -25,6 +26,41 @@ public class ItemClass
     {
         this.data = data;
         this.quantity = 1;
+
+        //create gun or tool
+
+        ItemGunData gunData = data.GetGun();
+
+        if (gunData != null)
+        {
+            gun = new GunClass(gunData);
+        }
+        else
+        {
+            gun = null;
+        }
+
+        ItemToolData toolData = data.GetTool();
+
+        if (toolData != null)
+        {
+            tool = new ToolClass(toolData);
+        }
+        else
+        {
+            tool = null;
+        }
+
+        if(PlayerHandler.Instance != null)
+        {
+            Debug.Log("did");
+            PlayerHandler.Instance.combat.EquipIfEmpty(this);
+        }
+        else
+        {
+            Debug.Log("couldnt do this");
+        }
+        
         UpdateAnyLinkedUI();
     }
 
@@ -32,7 +68,8 @@ public class ItemClass
     public void ControlEquip(bool choice)
     {
         IsEquipped = choice;
-        if(inventoryUnit != null) inventoryUnit.UpdateEquippedUI();
+        if (inventoryUnit != null) inventoryUnit.UpdateEquippedUI();
+        else Debug.Log("this was the problem");
     }
 
     #region QUANTITY
@@ -115,12 +152,45 @@ public class ItemClass
 
     #endregion
 
+
+    public void UseItem()
+    {
+        data.UseItem(this);
+        if (data.GetUsable() != null)
+        {
+            DecreaseQuantity(1);
+        }
+        //reduce quantity if it is reduceable
+    }
+
     public bool IsInteractable()
     {
         if (data == null) return false;
-        if (data.GetGun() != null) return true;
-
+        if(data.GetEquipment() != null) return true;
+        if(data.GetUsable() != null) return true;   
+        if(IsEquippable()) return true;
 
         return false;
     }
+
+    public bool IsEquippable()
+    {
+        if (data.GetTool() != null && !IsEquipped) return true;
+        if (data.GetGun() != null && !IsEquipped) return true;
+        return false;
+    }
+
+    
+
+    public void CreateGun()
+    {
+
+    }
+   
+    public void CreateTool()
+    {
+
+    }
+
 }
+

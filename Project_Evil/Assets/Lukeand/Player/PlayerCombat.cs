@@ -11,7 +11,9 @@ public class PlayerCombat : MonoBehaviour
 
     [Separator("CLASSES")]
     GunClass equippedGun;
-
+    ToolClass equippedSword;
+    ToolClass equippedShield;
+    
 
     [Separator("AMMO")]
     Dictionary<GunType, List<ItemClass>> ammoDictionary = new();
@@ -25,13 +27,14 @@ public class PlayerCombat : MonoBehaviour
     {
         handler = GetComponent<PlayerHandler>();
     }
-    
 
+
+    #region AIM AND SHOOTING
     public void Aim()
     {
         //we need to lmit the aim by the range of the gun.
-        aim.SetActive(true);
-        aim.transform.position = GetGunPos();       
+        //aim.SetActive(true);
+        //aim.transform.position = GetGunPos();       
     }
     public void StopAiming()
     {
@@ -59,20 +62,89 @@ public class PlayerCombat : MonoBehaviour
         */
         
     }
+    #endregion
 
     #region CHANGE
-    public void ChangeGun(GunClass newGun)
+
+    ItemClass currentGunItem;
+    GunClass currentGun;
+
+    ItemClass currentSwordItem;
+    ToolClass currentSword;
+
+    ItemClass currentShieldItem;
+    ToolClass currentShield;
+
+    public void ChangeGun(ItemClass newGun)
     {
+        //we get the gun from this itemclass. it needs to have one.
+        //put the gun in the hand.
+
+
+        if(currentGunItem != null)
+        {
+            currentGunItem.ControlEquip(false);
+        }
         
-    }
-    public void ChangeSword()
-    {
+        
+   
+        currentGunItem = newGun;
+        currentGun = newGun.gun;
+        currentGunItem.ControlEquip(true);
+
+      
 
     }
-    public void ChangeShield()
+    public void ChangeSword(ItemClass newSword)
     {
+       if(currentSwordItem != null)
+        {
+            currentSwordItem.ControlEquip(false);
+        }
+
+        currentSwordItem = newSword;
+        currentSwordItem.ControlEquip(true);
+        currentSword = currentSwordItem.tool;
 
     }
+    public void ChangeShield(ItemClass newShield)
+    {
+        if (currentShieldItem != null)
+        {
+            currentShieldItem.ControlEquip(false);
+        }
+
+        currentShieldItem = newShield;
+        currentShieldItem.ControlEquip(true);
+        currentShield = currentShieldItem.tool;
+    }
+    public void EquipIfEmpty(ItemClass item)
+    {
+        bool isGun = item.data.GetGun() != null && currentGunItem == null;
+
+        if (isGun)
+        {
+            ChangeGun(item);
+            return;
+        }
+
+        bool isSword = item.data.GetTool() != null && currentSwordItem == null && item.data.GetTool().isSword;
+        
+        if(isSword) 
+        {
+            ChangeSword(item); 
+            return;
+        }
+
+        bool isShield = item.data.GetTool() != null && currentShieldItem == null && !item.data.GetTool().isSword;
+
+        if(isShield)
+        {
+            ChangeShield(item);
+            return;
+        }
+    }
+
 
     #endregion
 
@@ -135,8 +207,12 @@ public class PlayerCombat : MonoBehaviour
 
     }
 
+    Vector3 GetGunPos2()
+    {
+        return Vector3.zero;
+    }
+
     #endregion
 
-
-
+  
 }

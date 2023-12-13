@@ -15,6 +15,26 @@ public class ItemGunData : ItemData
     public float bulletSpeed;
     public GunType gunType;
     public Bullet bullet;
+
+
+    public override void UseItem(ItemClass item)
+    {
+        base.UseItem(item);
+
+        //pass this to the char.
+
+        if(item.gun == null)
+        {
+            Debug.Log("gun");
+            return;
+        }
+        
+
+        PlayerHandler.Instance.combat.ChangeGun(item);
+        
+    }
+
+
     public override ItemGunData GetGun() => this;
     
 }

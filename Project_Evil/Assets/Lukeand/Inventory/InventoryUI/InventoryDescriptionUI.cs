@@ -16,11 +16,11 @@ public class InventoryDescriptionUI : MonoBehaviour
 
     public void Open()
     {
-
+        descriptionHolder.SetActive(true);
     }
     public void Close()
     {
-
+        descriptionHolder?.SetActive(false);
     }
 
     public void Describe(InventoryUnit itemUnit)
@@ -34,11 +34,16 @@ public class InventoryDescriptionUI : MonoBehaviour
             return;
         }
 
+        Open();
         ItemClass item = itemUnit.item;
 
-
+        
     }
 
+    public void StopDescribe()
+    {
+        Close();
+    }
 
     void DescribeResource()
     {

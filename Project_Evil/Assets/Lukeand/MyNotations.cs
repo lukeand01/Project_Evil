@@ -59,3 +59,17 @@
 //HOW TO MAKE THE INVNTORY INTERESTING?
 //certains thing cannot be side by side.
 //for now just the inventroy.
+//effect to be carrying certain itens
+//
+
+
+//TASK
+//can equip gun
+//can use gun althought it has no graphic
+//show 
+
+//TASK
+//i need to improve the controls
+//make the aim behave right (limited by range, limited by wall, )
+//
+//add effect for reloading, changing weapons in the aim.

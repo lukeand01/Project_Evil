@@ -10,6 +10,10 @@ public class GunClass
     float current;
     float total;
 
+    public GunClass(ItemGunData data)
+    {
+        this.data = data;
+    }
     
 
 }

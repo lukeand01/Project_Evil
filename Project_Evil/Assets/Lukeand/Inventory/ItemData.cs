@@ -14,14 +14,17 @@ public class ItemData : ScriptableObject
     [Separator("USABLE")]
     public float useTime;
 
-    public virtual void UseItem()
+    public virtual void UseItem(ItemClass item)
     {
         //guns are equipped. potions are used. 
+        //
+
     }
+
 
     public bool IsUsable()
     {
-        return itemType == ItemType.Potion || itemType == ItemType.Gun || itemType == ItemType.Sword;
+        return itemType == ItemType.Consumable || itemType == ItemType.Gun || itemType == ItemType.Tool;
     }
 
 
@@ -34,12 +37,17 @@ public class ItemData : ScriptableObject
     public virtual ItemResourceData GetResource() => null;
 
     public virtual ItemAmmoData GetAmmo() => null;
+
+    public virtual ItemToolData GetTool() => null;
+
 }
 
 public enum ItemType
 {
-    Potion,
-    Gun,
-    Ammo,
-    Sword
+    Consumable, //can be used
+    Gun, //can be equipped
+    Ammo, //nothing
+    Tool, //can be equipped
+    Equipment, //can be equipped
+    Resource //cacn be crafted
 }

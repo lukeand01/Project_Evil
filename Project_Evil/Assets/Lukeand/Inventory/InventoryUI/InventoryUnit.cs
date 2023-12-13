@@ -63,23 +63,20 @@ public class InventoryUnit : ButtonBase, IDraggable, IDragHandler
         empty.SetActive(!hasItem);
         chargeImage.gameObject.SetActive(hasItem);
 
-        if (debug != "")
-        {
-            Debug.Log("this " + hasItem);
-        }
+        
         if (!hasItem) return;
         icon.sprite = item.data.itemSprite;
         nameText.text = item.data.itemName;
         quantityText.text = item.quantity.ToString();
+        UpdateEquippedUI();
 
-        if (debug != "")
-        {
-            Debug.Log("got here "  + quantityText.text + " and " + item.quantity);
-        }
+
+        
     }
 
     public void UpdateEquippedUI()
     {
+
         equippedText.gameObject.SetActive(item.IsEquipped);
     }
 
@@ -97,14 +94,14 @@ public class InventoryUnit : ButtonBase, IDraggable, IDragHandler
         if (notInteractable) return ;
         base.OnPointerEnter(eventData);      
 
-        handler.draggableHandler.Hover(this);
+        handler.Hover(this);
     }
     public override void OnPointerExit(PointerEventData eventData)
     {
         if (notInteractable) return;
         if (!ItemExists()) return;
         base.OnPointerExit(eventData);
-        handler.draggableHandler.StopHover();
+        handler.StopHover();
     }
 
     public void OnDrag(PointerEventData eventData)

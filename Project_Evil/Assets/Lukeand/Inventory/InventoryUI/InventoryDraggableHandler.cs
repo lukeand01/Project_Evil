@@ -91,6 +91,8 @@ public class InventoryDraggableHandler : MonoBehaviour
     {
         hoverItem = item;
         hoverItem.ControlHover(true);
+
+        
     }
 
     public void StopHover()

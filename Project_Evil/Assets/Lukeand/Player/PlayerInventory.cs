@@ -9,15 +9,15 @@ public class PlayerInventory : MonoBehaviour
     PlayerHandler handler;
     [SerializeField] List<ItemClass> initialItem;
 
-    private void Awake()
-    {
-        inventory = new InventoryClass(initialSlotQuantity);
-        handler = GetComponent<PlayerHandler>();
-    }
+
+
+    
 
     private void Start()
     {
 
+        inventory = new InventoryClass(initialSlotQuantity);
+        handler = GetComponent<PlayerHandler>();
 
         foreach (ItemClass item in initialItem)
         {

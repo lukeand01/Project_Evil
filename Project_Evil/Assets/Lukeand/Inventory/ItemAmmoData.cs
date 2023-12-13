@@ -9,6 +9,12 @@ public class ItemAmmoData : ItemData
     [Separator("Ammo")]
     [SerializeField] AmmoType ammoType;
 
+
+    private void Awake()
+    {
+        itemType = ItemType.Ammo;
+    }
+
     public override ItemAmmoData GetAmmo() => this;
     
 }
