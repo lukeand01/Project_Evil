@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
@@ -34,9 +35,7 @@ public class InventoryUI : MonoBehaviour
 
     private void Awake()
     {
-        chargingModifier = 0.15f;
-        total = 5;
-        totalUseCooldown = 0.5f;
+        
         currentUseCooldown = totalUseCooldown;
         holder = transform.GetChild(0).gameObject;
 
@@ -46,8 +45,18 @@ public class InventoryUI : MonoBehaviour
         craftUI = GetComponent<InventoryCraftUI>(); 
     }
 
-    private void FixedUpdate()
+    private void Start()
     {
+        chargingModifier = 0.5f * Time.timeScale * Time.deltaTime ;
+        total = 5 * Time.timeScale;
+        totalUseCooldown = 0.5f * Time.timeScale;
+    }
+
+    private void Update()
+    {
+
+        if (GameHandler.instance == null) return;
+
         if(draggableHandler.isDragging)
         {
             m1Text.text = "M1: Release to swap";
@@ -77,31 +86,33 @@ public class InventoryUI : MonoBehaviour
 
         if (currentUseCooldown < totalUseCooldown)
         {
-
-            currentUseCooldown += 0.01f;
+            currentUseCooldown += chargingModifier;
         }
+
+
 
         if (currentUsingItem != null)
         {
 
-            if (!currentUsingItem.item.IsInteractable()) return;
+            if (!currentUsingItem.item.IsInteractable())
+            {
+                return;
+            }
+
 
             if (currentUseCooldown >= totalUseCooldown && !isStuckInHoldMouse)
             {
                 if (Input.GetMouseButton(1))
                 {
-
                     UsingItem(currentUsingItem);
                 }
                 else
                 {
-
                     StopUsingItem(currentUsingItem);
                 }
             }
             else
             {
-
                 StopUsingItem(currentUsingItem);
             }
         }
@@ -111,6 +122,7 @@ public class InventoryUI : MonoBehaviour
     {
 
         current += chargingModifier;
+
         refUnit.UpdateCharge(current, total);
 
         if(current > total) 
@@ -133,6 +145,7 @@ public class InventoryUI : MonoBehaviour
 
     void StopUsingItem(InventoryUnit refUnit)
     {
+
         if (refUnit == null)
         {
             current = 0;
@@ -146,17 +159,40 @@ public class InventoryUI : MonoBehaviour
         
     }
 
+    public void ControlUI()
+    {
+        if(holder.activeInHierarchy)
+        {
+            Close();
+        }
+        else
+        {
+            Open();
+        }
+    }
 
-
-    public void Open()
+     void Open()
     {
         holder.SetActive(true);
         current = 0;
         currentUseCooldown = totalUseCooldown;
+
+
+        if (GameHandler.instance != null)
+        {
+            GameHandler.instance.PauseGameTime();
+            PlayerHandler.Instance.block.AddBlock("Inventory", BlockClass.BlockType.Partial);
+        }
+        
     }
-    public void Close()
+     void Close()
     {
         holder.SetActive(false);
+        if (GameHandler.instance != null)
+        {
+            GameHandler.instance.ResumeGameTime();
+            PlayerHandler.Instance.block.RemoveBlock("Inventory");
+        }
     }
 
     public void UpdateUnitList(List<ItemClass> itemList)

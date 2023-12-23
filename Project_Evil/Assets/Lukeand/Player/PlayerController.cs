@@ -18,11 +18,38 @@ public class PlayerController : MonoBehaviour
         key = new KeyClass();
     }
 
+    private void Update()
+    {
+        if (handler.block.HasBlock(BlockClass.BlockType.Complete)) return;
+        
+
+        if (!handler.block.HasBlock(BlockClass.BlockType.UI))
+        {
+            InventoryInput();
+        }
+
+        if (handler.block.HasBlock(BlockClass.BlockType.Partial)) return;
+
+        DashInput();
+        
+        GunCombatInput();
+        MeleeCombatInput();
+    }
+
     private void FixedUpdate()
     {
+        if (handler.block.HasBlock(BlockClass.BlockType.Complete)) return;
+
+
+        if (!handler.block.HasBlock(BlockClass.BlockType.UI))
+        {
+            return;
+        }
+
+        if (handler.block.HasBlock(BlockClass.BlockType.Partial)) return;
+
+
         MovementInput();
-        CombatInput();
-        InventoryInput();
     }
 
     void MovementInput()
@@ -33,35 +60,65 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(key.GetKey(KeyType.MoveUp))) moveDir += new Vector2(0, 1);
         if (Input.GetKey(key.GetKey(KeyType.MoveDown))) moveDir += new Vector2(0, -1);
 
-        handler.move.MovePlayer(moveDir);
+        handler.playerMove.MovePlayer(moveDir);
     }
 
-    void CombatInput()
+    void DashInput()
+    {
+        if (Input.GetKeyDown(key.GetKey(KeyType.Dash)))
+        {
+            handler.playerMove.Dash();
+        }
+    }
+
+    void GunCombatInput()
     {
 
         if(Input.GetKey(key.GetKey(KeyType.Shoot)))
         {
-            handler.combat.Shoot();
+            handler.playerCombat.Shoot();
+        }
+        else
+        {
+            handler.playerCombat.StoppedShooting();
         }
 
         if (Input.GetKey(key.GetKey(KeyType.Aim)))
         {
-            handler.combat.Aim();
+            handler.playerCombat.Aim();
         }
         else
         {
-            handler.combat.StopAiming();
+            handler.playerCombat.StopAiming();
         }
 
+        if (Input.GetKey(key.GetKey(KeyType.Reload)))
+        {
+            handler.playerCombat.Reload();
+        }
 
     }
+
+    void MeleeCombatInput()
+    {
+        if (Input.GetKeyDown(key.GetKey(KeyType.UseSword)))
+        {
+            handler.playerCombat.UseSword();
+        }
+
+        if (Input.GetKeyDown(key.GetKey(KeyType.UseShield)))
+        {
+            handler.playerCombat.UseShield();
+        }
+    }
+
 
     void InventoryInput()
     {
         if (Input.GetKeyDown(key.GetKey(KeyType.Inventory)))
         {
             //call this.
-            UIHolder.instance.inventory.Open();
+            UIHolder.instance.uiInventory.ControlUI();
         }
     }
 

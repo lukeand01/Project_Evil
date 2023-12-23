@@ -17,8 +17,11 @@ public class KillSelf : MonoBehaviour
     public void SetUpDistance(Vector3 originalPos, float distanceAllowed)
     {
         isDistance = true;
+
+
+       
         this.originalPos = originalPos;
-        this.distanceAllowed = distanceAllowed;
+        this.distanceAllowed = distanceAllowed * 0.95f;
     }
 
     private void FixedUpdate()
@@ -31,7 +34,7 @@ public class KillSelf : MonoBehaviour
             }
             else
             {
-                Debug.Log("too long time");
+     
                 Destroy(gameObject);
             }
 
@@ -39,8 +42,9 @@ public class KillSelf : MonoBehaviour
 
         if (isDistance)
         {
-            if(Vector3.Distance(transform.position, originalPos) > distanceAllowed)
+            if (Vector2.Distance(transform.position, originalPos) > distanceAllowed)
             {
+                
                 Destroy(gameObject);
             }
         }

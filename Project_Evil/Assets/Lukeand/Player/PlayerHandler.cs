@@ -1,28 +1,41 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerHandler : MonoBehaviour
 {
    public static PlayerHandler Instance;
 
-     public PlayerMove move { get; private set; }
-     public PlayerController controller { get; private set; }
-     public PlayerCombat combat { get; private set; }
-     public EntityHandler entityHandler { get; private set; }
+     public PlayerMove playerMove { get; private set; }
+     public PlayerController playerController { get; private set; }
+     public PlayerCombat playerCombat { get; private set; }
 
+    public PlayerInventory playerInventory { get; private set; }
+
+    public PlayerDamageable playerDamageable { get; private set; }
+
+    public PlayerCamera playerCamera { get; private set; }
+
+
+    public Rigidbody2D rb { get; private set; }
+
+    public BlockClass block {  get; private set; }
 
     private void Awake()
     {
         Instance = this;
 
-        move = GetComponent<PlayerMove>();
-        controller = GetComponent<PlayerController>(); 
-        combat = GetComponent<PlayerCombat>();
+        playerMove = GetComponent<PlayerMove>();
+        playerController = GetComponent<PlayerController>(); 
+        playerCombat = GetComponent<PlayerCombat>();
+        playerInventory = GetComponent<PlayerInventory>();
+        playerDamageable = GetComponent<PlayerDamageable>();
+        playerCamera = GetComponent<PlayerCamera>();
 
-        entityHandler = GetComponent<EntityHandler>();
+        rb = GetComponent<Rigidbody2D>();
+
+        block = new BlockClass();
     }
 
+    
 
 
 

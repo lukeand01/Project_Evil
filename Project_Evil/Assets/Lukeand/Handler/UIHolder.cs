@@ -6,7 +6,9 @@ public class UIHolder : MonoBehaviour
 {
     public static UIHolder instance;
 
-    public InventoryUI inventory;
+    public InventoryUI uiInventory;
+    public GunUI uiGun;
+    public PlayerResourceUI uiResource;
 
     private void Awake()
     {

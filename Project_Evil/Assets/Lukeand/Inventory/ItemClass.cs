@@ -10,16 +10,36 @@ public class ItemClass
     public ItemData data;
     public int quantity;
 
+    PlayerInventory inventoryHandler;
+
+    public int slotID {  get; private set; }    
+
+
     public GunClass gun { get; private set; } = null;
     public ToolClass tool { get; private set; } = null;
 
     public bool IsEquipped { get; private set; } //if this is ever case then we show something.
 
 
+    public bool isResourceBeingUsed { get; private set; }
+
+
+    public void SetResourceAsBeingUsed() => isResourceBeingUsed = true;
+
     public ItemClass(ItemData data, int quantity)
     {
         this.data = data;
         this.quantity = quantity;
+
+        isResourceBeingUsed = false;
+    }
+
+
+
+    #region RECEIVE
+    public void ReceiveNewSlotID(int slotID)
+    {
+        this.slotID = slotID;
     }
 
     public void ReceiveNewData(ItemData data)
@@ -27,6 +47,7 @@ public class ItemClass
         this.data = data;
         this.quantity = 1;
 
+        isResourceBeingUsed = false;
         //create gun or tool
 
         ItemGunData gunData = data.GetGun();
@@ -53,8 +74,8 @@ public class ItemClass
 
         if(PlayerHandler.Instance != null)
         {
-            Debug.Log("did");
-            PlayerHandler.Instance.combat.EquipIfEmpty(this);
+
+            PlayerHandler.Instance.playerCombat.EquipIfEmpty(this);
         }
         else
         {
@@ -64,12 +85,33 @@ public class ItemClass
         UpdateAnyLinkedUI();
     }
 
+    public void ReceiveNewHandler(PlayerInventory handler)
+    {
+       inventoryHandler = handler;    
+    }
+
+    #endregion
 
     public void ControlEquip(bool choice)
     {
         IsEquipped = choice;
         if (inventoryUnit != null) inventoryUnit.UpdateEquippedUI();
-        else Debug.Log("this was the problem");
+        
+    }
+    void EmptyData()
+    {
+        if(data.itemType == ItemType.Ammo)
+        {
+            //then we inform the handler that this fella was changed.
+
+        }
+
+
+        data = null;
+        quantity = 0;
+        isResourceBeingUsed = false;
+        
+
     }
 
     #region QUANTITY
@@ -83,12 +125,15 @@ public class ItemClass
 
 
         this.quantity -= quantity;
+        if (data.itemType == ItemType.Ammo)
+        {
+            //Debug.Log("this is being reduced");
+        }
 
-        if(this.quantity <= 0)
+        if (this.quantity <= 0)
         {
 
-            data = null;
-            this.quantity = 0;
+            EmptyData();
             
         }
 
@@ -96,8 +141,10 @@ public class ItemClass
 
         if (debug != "")
         {
-            Debug.Log("quantity " + quantity + " " + this.quantity);
+            Debug.Log("quantity " + quantity + " " + this.quantity + " " + debug);
         }
+
+        
     }
 
     public void DecideIfShouldReduce()
@@ -180,8 +227,8 @@ public class ItemClass
         return false;
     }
 
-    
 
+    #region CREATE
     public void CreateGun()
     {
 
@@ -192,5 +239,22 @@ public class ItemClass
 
     }
 
+    #endregion
 }
 
+
+//i dont want to cehck everything everytime.
+//so i need to add to a list to check it better 
+//we add and when anything happens we just cchecck if someone was rmeoved.
+
+//the moments wwe check
+//
+
+
+//i would like to create an int value about it.
+//it should reflect what there is 
+
+
+//its going to go as following.
+//we will only hold the int value in the combat part.
+//everytime we add an item we will update that int. everytime we spend ammo

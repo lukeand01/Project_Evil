@@ -11,14 +11,7 @@ public class KeyClass
         SetUpKeys2();
     }
 
-    KeyCode keyMoveLeft;
-    KeyCode keyMoveRight;
-    KeyCode keyMoveUp;
-    KeyCode keyMoveDown;
-    KeyCode keyInventory;
-    KeyCode keyInteract;
-    KeyCode keyAim;
-    KeyCode keyShoot;
+    
 
     Dictionary<KeyType, KeyCode> keyDictionary = new Dictionary<KeyType, KeyCode>();
 
@@ -34,19 +27,7 @@ public class KeyClass
 
     }
 
-    void SetUpKeys()
-    {
-        keyMoveLeft = KeyCode.A;
-        keyMoveRight = KeyCode.D;
-        keyMoveDown = KeyCode.S;
-        keyMoveUp = KeyCode.W;
-
-        keyInventory = KeyCode.Tab;
-        keyInteract = KeyCode.E;
-
-        keyAim = KeyCode.Mouse1;
-        keyShoot = KeyCode.Mouse0;  
-    }
+    
 
     void SetUpKeys2()
     {
@@ -60,7 +41,12 @@ public class KeyClass
 
         keyDictionary.Add(KeyType.Shoot, KeyCode.Mouse0);
         keyDictionary.Add(KeyType.Aim, KeyCode.Mouse1);
+        keyDictionary.Add(KeyType.Reload, KeyCode.R);
 
+        keyDictionary.Add(KeyType.UseShield, KeyCode.Q);
+        keyDictionary.Add(KeyType.UseSword, KeyCode.F);
+
+        keyDictionary.Add(KeyType.Dash, KeyCode.LeftShift);
     }
 
 
@@ -75,5 +61,10 @@ public enum KeyType
     Interact,
     Inventory,
     Shoot,
-    Aim
+    Aim,
+    UseSword,
+    UseShield,
+    Reload,
+    Dash
+
 }

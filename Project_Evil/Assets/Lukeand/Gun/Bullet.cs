@@ -12,15 +12,16 @@ public class Bullet : MonoBehaviour
     int[] AllowedLayers;
     [SerializeField]LayerMask layer;
     Vector3 dir;
-    float damage;
+    DamageClass damage;
     string shooterID;
     float speed;
 
-    public void SetUp(string shooterID, Vector3 dir, float damage, float speed)
+    public void SetUp(string shooterID, Vector3 dir, DamageClass damage, float speed)
     {
         this.shooterID = shooterID;
         this.dir = dir;
         this.damage = damage;
+        this.damage.MakeAttackerRef(gameObject);
         this.speed = speed;
     }
 
@@ -28,7 +29,11 @@ public class Bullet : MonoBehaviour
     {
         KillSelf self = gameObject.AddComponent<KillSelf>();
 
+
         self.SetUpTimer(30);
+
+
+
         self.SetUpDistance(transform.position, distanceAllowed);
     }
 
@@ -47,9 +52,9 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        transform.position += dir * 0.01f * speed;
+        transform.position += dir * Time.deltaTime * speed;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -75,17 +80,25 @@ public class Bullet : MonoBehaviour
             }
         }
 
-        EntityDamageable damageable = collision.GetComponent<EntityDamageable>();
+        IDamageable damageable = collision.GetComponent<IDamageable>();
 
         if (damageable == null)
         {
+
             return;
         }
 
-        if (damageable.id == shooterID)
+        string id = damageable.GetDamageableID();
+
+        if (id == shooterID)
         {
             return;
         }
+        else
+        {
+
+        }
+
 
         damageable.TakeDamage(damage);
 

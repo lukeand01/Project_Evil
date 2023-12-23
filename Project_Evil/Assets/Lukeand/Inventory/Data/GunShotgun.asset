@@ -10,26 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93be4d0190d4a454d9702a111708cfa1, type: 3}
-  m_Name: GunPistol
+  m_Name: GunShotgun
   m_EditorClassIdentifier: 
-  itemName: Pistol
-  itemDescription: This is a pistol
+  itemName: Shotgun
+  itemDescription: This is a shotgun
   stackLimit: 0
   itemSprite: {fileID: 21300000, guid: c33c6ae4ffbbdc8439f47c9811ec4064, type: 3}
   itemType: 1
   useTime: 0
-  clipSize: 7
-  bulletPerShot: 1
-  damage: 5
+  clipSize: 2
+  bulletPerShot: 6
+  damage: 4
   penetrationPower: 0
-  range: 10
+  range: 15
   timeBtwShoot: 0.25
   canHoldButton: 0
   bulletSpeed: 50
-  reloadingSpeed: 2
-  gunType: 0
-  ammoType: 0
+  gunType: 1
+  ammoType: 1
   bullet: {fileID: -6121984214887522396, guid: 36922a9e224e32546b97e9cf9175eca0, type: 3}
-  graphicalTemplate: {fileID: 1355221471681028239, guid: f03f15507ee8a934aaa84e8eb73fed86, type: 3}
-  graphicalOffsetValue: 0
-  graphicShouldRotate: 0
+  graphicalTemplate: {fileID: 906103464445720479, guid: 1e78a415743ffa843979e98aa98a147d, type: 3}
+  graphicalOffsetValue: 0.4
+  graphicShouldRotate: 1

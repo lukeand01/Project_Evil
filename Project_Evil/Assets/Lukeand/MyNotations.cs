@@ -71,5 +71,37 @@
 //TASK
 //i need to improve the controls
 //make the aim behave right (limited by range, limited by wall, )
-//
+//show weapons
 //add effect for reloading, changing weapons in the aim.
+
+
+//TASK
+///shoot
+///use ammo
+///reloading
+///shooting enemey can stagger them.
+//use shield.
+//use sword. it pushes enemies.
+//if you do no have a shield you will blocck with your sword which damages it a lot.
+
+//TASK
+///create health
+
+//TASK
+//can dash
+//dashing leaves a cloud that makes all enemies to receive more damage. 
+
+
+//TASK
+//create sound for everything 
+//for inventory
+//guns
+//and ui
+
+
+ 
+//should it have mana?
+//spells cause curse to the cchar. and are spendable itens.
+//they can put in slots for quick use. 
+
+//

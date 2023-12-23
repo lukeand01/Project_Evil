@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class DamageClass 
 {
+    public GameObject attackerRef {  get; private set; }
 
     public float baseDamage { get; private set; }
+    public float staggerDamage {  get; private set; }   
     float critChance;
     float critDamage;
     float damageBasedInHealth;
 
     //we get the health scaling.
-
-
 
     public bool cannotFinishEntity { get; private set;}
 
@@ -23,6 +23,13 @@ public class DamageClass
         this.baseDamage = baseDamage;       
     }
     
+    public DamageClass(ItemGunData gunData)
+    {
+        baseDamage = gunData.damage;
+        staggerDamage = 50;
+
+
+    }
 
     #region MAKE
 
@@ -36,6 +43,10 @@ public class DamageClass
         this.critChance = critChance;
     }
 
+    public void MakeAttackerRef(GameObject attackerRef)
+    {
+        this.attackerRef = attackerRef; 
+    }
     
 
     #endregion

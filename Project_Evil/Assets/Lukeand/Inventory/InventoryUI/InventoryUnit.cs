@@ -29,10 +29,17 @@ public class InventoryUnit : ButtonBase, IDraggable, IDragHandler
 
     public string id {  get; private set; }
 
+    float timeModifier;
+
     private void Awake()
     {
         originalScale = transform.localScale - new Vector3(0.3f, 0.3f,0);
         id = Guid.NewGuid().ToString();
+    }
+
+    private void Start()
+    {
+        timeModifier = GameHandler.instance.timeModifier;
     }
 
     public void SetUp(ItemClass item, InventoryUI handler)

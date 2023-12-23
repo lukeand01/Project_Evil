@@ -51,9 +51,7 @@ public class BlockClass
         Complete,
         Partial,
         Movement,
-        MouseSkill,
-        KeySkill,
-        Silence
+        UI
 
 
     }

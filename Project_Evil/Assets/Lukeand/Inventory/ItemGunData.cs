@@ -1,3 +1,4 @@
+using MyBox;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,10 +14,22 @@ public class ItemGunData : ItemData
     public float timeBtwShoot;
     public bool canHoldButton;
     public float bulletSpeed;
+    public float reloadingSpeed;
     public GunType gunType;
+    public AmmoType ammoType;
+
+
+    [Separator("Graphical")]
     public Bullet bullet;
+    public GameObject graphicalTemplate;
+    public float graphicalOffsetValue;
+    public bool graphicShouldRotate;
 
 
+    private void Awake()
+    {
+        itemType = ItemType.Gun;
+    }
     public override void UseItem(ItemClass item)
     {
         base.UseItem(item);
@@ -30,7 +43,7 @@ public class ItemGunData : ItemData
         }
         
 
-        PlayerHandler.Instance.combat.ChangeGun(item);
+        PlayerHandler.Instance.playerCombat.ChangeGun(item);
         
     }
 

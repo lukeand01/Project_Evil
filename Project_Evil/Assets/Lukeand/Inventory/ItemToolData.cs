@@ -26,11 +26,11 @@ public class ItemToolData : ItemData
 
         if(isSword)
         {
-            PlayerHandler.Instance.combat.ChangeSword(item);
+            PlayerHandler.Instance.playerCombat.ChangeSword(item);
         }
         else
         {
-            PlayerHandler.Instance.combat.ChangeShield(item);
+            PlayerHandler.Instance.playerCombat.ChangeShield(item);
         }
         
     }

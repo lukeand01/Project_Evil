@@ -7,7 +7,7 @@ using UnityEngine;
 public class ItemAmmoData : ItemData
 {
     [Separator("Ammo")]
-    [SerializeField] AmmoType ammoType;
+    public AmmoType ammoType;
 
 
     private void Awake()

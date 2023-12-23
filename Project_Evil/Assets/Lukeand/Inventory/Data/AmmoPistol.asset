@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Pistol Ammo
   itemDescription: Ammo For Pistol
-  stackLimit: 50
+  stackLimit: 15
   itemSprite: {fileID: 21300000, guid: 84e82be6dba927947b3326e9a8bfcdd9, type: 3}
   itemType: 2
   useTime: 0
