@@ -9,13 +9,13 @@ public class PlayerMove : MonoBehaviour
     PlayerHandler handler;
     //mopvemnt logic.
     Vector2 moveDir;
-    public Vector2 lastDir {  get; private set; }
-    Camera cam;
+    public Vector3 lastDir {  get; private set; }
+
     [SerializeField] float speed;
     private void Awake()
     {
         shouldFollowMouse = true;
-        cam = Camera.main;
+
 
         handler = GetComponent<PlayerHandler>();    
     }
@@ -32,9 +32,21 @@ public class PlayerMove : MonoBehaviour
     #region MOVEMENT   
     public void MovePlayer(Vector3 value)
     {
-        lastDir = value;
-        transform.position += value * Time.deltaTime * speed;
-        //handler.rb.velocity = value *  speed;
+
+        if (isDashing)
+        {
+
+            return;
+        }
+
+        if(value != Vector3.zero)
+        {
+            lastDir = value;
+        }
+
+        moveDir = value;
+        //transform.position += value * Time.deltaTime * speed;
+        handler.rb.velocity = value *  speed;
     }
 
     void LookAtMouse()
@@ -42,7 +54,7 @@ public class PlayerMove : MonoBehaviour
         //always lookig at the mouse unless something happens.
         //
 
-        RotateToTarget(cam.ScreenToWorldPoint(Input.mousePosition));
+        RotateToTarget(handler.cam.ScreenToWorldPoint(Input.mousePosition));
     }
 
     public void RotateToTarget(Vector3 targetPos)
@@ -78,10 +90,28 @@ public class PlayerMove : MonoBehaviour
     [Separator("DASH")]
     [SerializeField] float dashSpeed;
     [SerializeField] float totalDashCooldown;
+    [SerializeField] float totalDashDistance;
     float currentDashCooldown;
+    float currentDashDistance;
+    bool isDashing;
+
+
 
     void HandleDashCooldown()
     {
+
+        if(currentDashDistance > 0)
+        {
+            currentDashDistance -= 0.02f;
+            return;
+        }
+
+        if (isDashing)
+        {
+            StopDashing();
+        }
+
+        
         if(currentDashCooldown > 0)
         {
             currentDashCooldown -= 0.02f;
@@ -93,22 +123,28 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
+    void StopDashing()
+    {
+        isDashing = false;
+        gameObject.layer = 3;
+    }
     public void Dash()
     {
         //we always dash towards the lastdir
 
-        if(lastDir == Vector2.zero)
+        if(lastDir == Vector3.zero)
         {
             Debug.Log("last dir is wrong");
             return;
         }
         if (currentDashCooldown > 0) return;
 
-
-
-        handler.rb.AddForce(lastDir * dashSpeed);
+        isDashing = true;
+        Debug.Log("dash");
+        gameObject.layer = 7;
+        handler.rb.AddForce(lastDir * dashSpeed, ForceMode2D.Impulse);
         currentDashCooldown = totalDashCooldown;
-
+        currentDashDistance = totalDashDistance;
     }
 
 

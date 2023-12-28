@@ -1,17 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
+
+    [SerializeField] int initialCredit;
+    int currentCredits;
     [SerializeField] int initialSlotQuantity;
     public InventoryClass inventory;
     PlayerHandler handler;
     [SerializeField] List<ItemClass> initialItem;
     [SerializeField] List<ItemClass> DEBUGshowItemList;
 
-
+    
 
     private void Start()
     {
@@ -42,7 +46,7 @@ public class PlayerInventory : MonoBehaviour
 
     }
 
-  
+   
 
     //
     public int TryToAddItem(ItemClass item)
@@ -141,7 +145,9 @@ public class PlayerInventory : MonoBehaviour
         
     }
 
+
     
+
 
 
     [SerializeField] ItemClass ammoPistol;

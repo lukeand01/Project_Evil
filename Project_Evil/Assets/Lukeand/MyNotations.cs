@@ -64,15 +64,15 @@
 
 
 //TASK
-//can equip gun
-//can use gun althought it has no graphic
-//show 
+///can equip gun
+///can use gun althought it has no graphic
+///show 
 
 //TASK
-//i need to improve the controls
-//make the aim behave right (limited by range, limited by wall, )
-//show weapons
-//add effect for reloading, changing weapons in the aim.
+///i need to improve the controls
+///make the aim behave right (limited by range, limited by wall, )
+///show weapons
+///add effect for reloading, changing weapons in the aim.
 
 
 //TASK
@@ -80,28 +80,63 @@
 ///use ammo
 ///reloading
 ///shooting enemey can stagger them.
-//use shield.
+///use shield.
 //use sword. it pushes enemies.
 //if you do no have a shield you will blocck with your sword which damages it a lot.
 
 //TASK
-///create health
+///create a way to get itens from teh world
+//ccan remove items from inventory.
 
 //TASK
-//can dash
+///create health
+///create ccurse 
+///create magical scrolls
+///create slot system for putting to magical scroll to use it.
+
+//TASK
+///can dash
 //dashing leaves a cloud that makes all enemies to receive more damage. 
 
+//TASK
+//create system for bd
+
+//create grenade
 
 //TASK
 //create sound for everything 
 //for inventory
 //guns
 //and ui
+//for grabbing itens
+
+//TASK
+//top down pathfind.
+//create enemies
+//simple enemy that just goes forward.
+//a simple enemy that shoots. it tries to keep distance.
+//an enemy that heals after not being shoot for a short duration
+//enemy that must be cursed in order to damage.
+//enemy that slows the player when in sight.
 
 
- 
+
+
+
+
 //should it have mana?
 //spells cause curse to the cchar. and are spendable itens.
 //they can put in slots for quick use. 
 
-//
+//cannot open chest.
+//can only grab itens from the thing.
+
+
+//GAME NARRATIVE
+//the player sneaks into the dungeon which is the tutorial
+//the player explores and get loot. which he takes to base to sell and get other stuff.
+//in a certain part he will stuck deeper into the dungeon. he will only be able to sell flesh now.
+//he only falls to that part because of a witch. he must find her to discover how to get back.
+//this part of the game will be linear.
+//then he finds a community. and the game becomes about building and helping this community.
+//tehy will help each other to finally leave this place.

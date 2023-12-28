@@ -215,6 +215,7 @@ public class ItemClass
         if (data == null) return false;
         if(data.GetEquipment() != null) return true;
         if(data.GetUsable() != null) return true;   
+        if(data.GetScroll() != null) return true;   
         if(IsEquippable()) return true;
 
         return false;

@@ -27,5 +27,6 @@ public class PlayerCamera : MonoBehaviour
         mainCam.orthographicSize = value;
     }
     
+    
 
 }

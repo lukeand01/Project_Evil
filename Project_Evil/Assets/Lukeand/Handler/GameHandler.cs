@@ -6,11 +6,14 @@ public class GameHandler : MonoBehaviour
 {
     public static GameHandler instance;
 
+    public UIReferenceHolder uiRef {  get; private set; }
+
     public float timeModifier {  get; private set; }
     public float rightTimeScale { get; private set; }
 
     private void Awake()
     {
+        uiRef = GetComponent<UIReferenceHolder>();  
         instance = this;
     }
 

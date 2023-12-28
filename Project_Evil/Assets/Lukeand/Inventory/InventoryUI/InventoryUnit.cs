@@ -16,9 +16,12 @@ public class InventoryUnit : ButtonBase, IDraggable, IDragHandler
 
     [SerializeField] Image icon;
     [SerializeField] GameObject empty;
+    [SerializeField] GameObject selected; 
     [SerializeField] TextMeshProUGUI nameText;
     [SerializeField] TextMeshProUGUI quantityText;
     [SerializeField] TextMeshProUGUI equippedText;
+
+
 
     [SerializeField] Image useAnimationImage;
     [SerializeField] Image chargeImage;
@@ -163,6 +166,10 @@ public class InventoryUnit : ButtonBase, IDraggable, IDragHandler
         chargeImage.fillAmount = current / total;
     }
 
+    public void ControlSelected(bool showSelected)
+    {
+        selected.gameObject.SetActive(showSelected);
+    }
 
     public void ControlHover(bool choice)
     {

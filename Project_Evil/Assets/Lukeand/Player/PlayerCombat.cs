@@ -8,7 +8,7 @@ using static UnityEditor.PlayerSettings;
 
 public class PlayerCombat : MonoBehaviour
 {
-    PlayerHandler handler;  
+    PlayerHandler handler;
 
 
 
@@ -41,7 +41,7 @@ public class PlayerCombat : MonoBehaviour
 
     }
 
-    
+
 
     //on for the mouse and another for the aim?
     //1 - range is based in weapon selected
@@ -51,17 +51,17 @@ public class PlayerCombat : MonoBehaviour
     private void Update()
     {
 
-        
+
 
         if (handler.block.HasBlock(BlockClass.BlockType.Complete)) return;
         if (isBlocking) handAim.SetActive(false);
         if (handler.block.HasBlock(BlockClass.BlockType.Partial)) return;
-        
+
 
         handAim.SetActive(true);
         handAim.transform.position = GetGunPos(false);
 
-      
+
     }
 
     private void FixedUpdate()
@@ -87,11 +87,11 @@ public class PlayerCombat : MonoBehaviour
         }
 
         gunAim.SetActive(currentGun != null);
-       
-        if(currentGun != null) gunAim.transform.position = GetGunPos(true);
-        
-       
-           
+
+        if (currentGun != null) gunAim.transform.position = GetGunPos(true);
+
+
+
     }
     public void StopAiming()
     {
@@ -102,7 +102,7 @@ public class PlayerCombat : MonoBehaviour
     {
 
         if (!gunAim.activeInHierarchy) return;
-        if(currentGun == null) return;
+        if (currentGun == null) return;
         if (hasPressed && !currentGun.data.canHoldButton) return;
         if (totalShootCooldown > currentShootingCooldown) return;
         if (!currentGun.HasAmmo())
@@ -129,7 +129,7 @@ public class PlayerCombat : MonoBehaviour
 
             Vector3 offset = Vector2.zero;
 
-            if(i != 0)
+            if (i != 0)
             {
                 //then we can change teh thing but the first one is always in the center.
                 float x = Random.Range(-0.15f, 0.15f);
@@ -139,7 +139,7 @@ public class PlayerCombat : MonoBehaviour
 
             Bullet newObject = Instantiate(currentGun.data.bullet, shootingPos.position, Quaternion.identity);
 
-            if(handler == null)
+            if (handler == null)
             {
                 Debug.Log("no handler");
             }
@@ -157,8 +157,8 @@ public class PlayerCombat : MonoBehaviour
             newObject.SetDestroySelf(currentGun.data.range);
 
         }
-       
-        
+
+
     }
 
     public void StoppedShooting()
@@ -168,16 +168,14 @@ public class PlayerCombat : MonoBehaviour
 
     #endregion
 
-    #region SWORD AND SHIELD
+    #region SWORD 
 
     //you can always attack with sword.
     // but when you attack a target that is staggered it pushes and does more damage around the staggered
     //
 
-    float totalShieldCooldown;
-    float currentShieldCooldown;
-    bool isStaggeredAhead;
-    bool isBlocking;
+
+    public bool isBlocking { get;private set; }
 
     void HandleToolCooldowns()
     {
@@ -244,7 +242,13 @@ public class PlayerCombat : MonoBehaviour
 
     }
 
-    
+    #endregion
+
+    #region SHIELD
+
+    float totalShieldCooldown;
+    float currentShieldCooldown;
+    bool isStaggeredAhead;
     public void UseShield()
     {
         if (currentShield == null) return;
@@ -264,7 +268,7 @@ public class PlayerCombat : MonoBehaviour
     {
         shieldHolder.SetActive(true);
 
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(0.35f);
 
         shieldHolder.SetActive(false);
         currentShieldCooldown = totalShieldCooldown;
@@ -291,6 +295,9 @@ public class PlayerCombat : MonoBehaviour
 
         yield return new WaitForSeconds(1.5f * Time.timeScale);
 
+
+        StopCoroutine(ShieldProcess());
+        shieldHolder.SetActive(false);
         isBlocking = false;
         handler.block.RemoveBlock("Shield");
         handler.playerCamera.ControlCameraZoom(7);

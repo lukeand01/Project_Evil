@@ -19,14 +19,7 @@ public class EnemyBase : MonoBehaviour, IDamageable
 
     private void Update()
     {
-        if (isStaggered)
-        {
-            DEBUGstaggerText.text = "IsStaggered";
-        }
-        else
-        {
-            DEBUGstaggerText.text = "";
-        }
+        DebugStagger();
     }
 
     private void FixedUpdate()
@@ -40,13 +33,7 @@ public class EnemyBase : MonoBehaviour, IDamageable
     //we roll 
 
 
-
     string id;
-    public string GetDamageableID()
-    {
-        return id;
-    }
-
     [SerializeField] float totalHealth;
     float currentHealth;
 
@@ -54,7 +41,12 @@ public class EnemyBase : MonoBehaviour, IDamageable
     bool isStaggered;
     bool hasBeenStaggered;
 
-    public void TakeDamage(DamageClass damage)
+    public string GetDamageableID()
+    {
+        return id;
+    }
+
+    public virtual void TakeDamage(DamageClass damage)
     {
         //enough damage will make thisc char stunned for a brief momeent. getting close to a character suchc as this will give the opportunity for the champ to attack 
 
@@ -93,12 +85,23 @@ public class EnemyBase : MonoBehaviour, IDamageable
 
     #endregion
 
-
     #region STAGGER
 
     float currentStagger;
     float totalStagger;
 
+    void DebugStagger()
+    {
+        if (isStaggered)
+        {
+            DEBUGstaggerText.text = "IsStaggered";
+        }
+        else
+        {
+            DEBUGstaggerText.text = "";
+        }
+
+    }
     void HandleStagger()
     {
         if (!isStaggered) return;
@@ -124,8 +127,15 @@ public class EnemyBase : MonoBehaviour, IDamageable
         isStaggered = false;
     }
 
-    
+
 
 
     #endregion
+
+
+    #region ANIMATION
+
+
+    #endregion
+
 }

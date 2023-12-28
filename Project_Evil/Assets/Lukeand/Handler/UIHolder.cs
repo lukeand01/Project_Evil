@@ -9,6 +9,7 @@ public class UIHolder : MonoBehaviour
     public InventoryUI uiInventory;
     public GunUI uiGun;
     public PlayerResourceUI uiResource;
+    public ScrollUI uiScroll;
 
     private void Awake()
     {

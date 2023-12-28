@@ -26,32 +26,24 @@ public class PlayerController : MonoBehaviour
         if (!handler.block.HasBlock(BlockClass.BlockType.UI))
         {
             InventoryInput();
+            ScrollUIInput();
         }
 
         if (handler.block.HasBlock(BlockClass.BlockType.Partial)) return;
 
         DashInput();
-        
+        MovementInput();
         GunCombatInput();
         MeleeCombatInput();
+        InteractInput();
+        ScrollInput();
     }
 
-    private void FixedUpdate()
+    
+    public string GetInputStringValue(KeyType keyValue)
     {
-        if (handler.block.HasBlock(BlockClass.BlockType.Complete)) return;
-
-
-        if (!handler.block.HasBlock(BlockClass.BlockType.UI))
-        {
-            return;
-        }
-
-        if (handler.block.HasBlock(BlockClass.BlockType.Partial)) return;
-
-
-        MovementInput();
+        return key.GetKey(keyValue).ToString();
     }
-
     void MovementInput()
     {
         Vector2 moveDir = Vector2.zero;
@@ -120,6 +112,52 @@ public class PlayerController : MonoBehaviour
             //call this.
             UIHolder.instance.uiInventory.ControlUI();
         }
+
+
     }
 
+
+    void InteractInput()
+    {
+        if (Input.GetKeyDown(key.GetKey(KeyType.Interact)))
+        {
+            handler.InteractWithInteractable();
+        }
+    }
+
+    void ScrollUIInput()
+    {
+        InventoryUI inventory = UIHolder.instance.uiInventory;
+
+        if (Input.GetKeyDown(key.GetKey(KeyType.Slot1)))
+        {
+            inventory.ConfirmNewScroll(0);
+        }
+        if (Input.GetKeyDown(key.GetKey(KeyType.Slot2)))
+        {
+            inventory.ConfirmNewScroll(1);
+        }
+        if (Input.GetKeyDown(key.GetKey(KeyType.Slot3)))
+        {
+            inventory.ConfirmNewScroll(2);
+        }
+    }
+    void ScrollInput()
+    {
+        //it can be either for using the thing or for selecting it.
+        if (Input.GetKeyDown(key.GetKey(KeyType.Slot1)))
+        {
+            handler.playerMagic.UseScroll(0);
+        }
+        if (Input.GetKeyDown(key.GetKey(KeyType.Slot2)))
+        {
+            handler.playerMagic.UseScroll(1);
+        }
+        if (Input.GetKeyDown(key.GetKey(KeyType.Slot3)))
+        {
+            handler.playerMagic.UseScroll(2);
+        }
+
+
+    }
 }

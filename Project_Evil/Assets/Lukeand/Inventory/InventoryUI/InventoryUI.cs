@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Jobs;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
 
@@ -33,6 +34,8 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI m1Text;
     [SerializeField] TextMeshProUGUI m2Text;
 
+    public bool IsOpen() => holder.activeInHierarchy;
+
     private void Awake()
     {
         
@@ -52,12 +55,34 @@ public class InventoryUI : MonoBehaviour
         totalUseCooldown = 0.5f * Time.timeScale;
     }
 
+    
+
+
     private void Update()
     {
 
         if (GameHandler.instance == null) return;
 
-        if(draggableHandler.isDragging)
+        
+        if(currentSelectedScroll != null)
+        {
+            if(Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+            {
+                //remove current selected scroll
+                SelectNewScroll(null, null);
+                return;
+            }
+            else
+            {
+                m1Text.text = "M1: Cancel Scroll Selection";
+                m2Text.gameObject.SetActive(false);
+            }
+
+            return;
+        }
+
+        m2Text.gameObject.SetActive(true);
+        if (draggableHandler.isDragging)
         {
             m1Text.text = "M1: Release to swap";
             m2Text.text = "M2: Stack on item";
@@ -169,6 +194,9 @@ public class InventoryUI : MonoBehaviour
         {
             Open();
         }
+
+        PlayerHandler.Instance.playerMagic.ControlUnusedScrollSlots(holder.activeInHierarchy);
+
     }
 
      void Open()
@@ -188,6 +216,7 @@ public class InventoryUI : MonoBehaviour
      void Close()
     {
         holder.SetActive(false);
+        SelectNewScroll(null, null);
         if (GameHandler.instance != null)
         {
             GameHandler.instance.ResumeGameTime();
@@ -234,5 +263,31 @@ public class InventoryUI : MonoBehaviour
         descriptionUI.StopDescribe();
     }
 
+
+    #region SELECTIN NEW SCROLL
+    ItemScrollData currentSelectedScroll;
+    ItemClass scrollInventoryItem; //this is the fella.
+
+    public void SelectNewScroll(ItemScrollData selectedData, ItemClass scrollInventoryItem)
+    {
+        this.scrollInventoryItem = scrollInventoryItem;
+        currentSelectedScroll = selectedData;
+        UIHolder.instance.uiScroll.ControlAllUnitsAnimation(selectedData != null);
+    }
     
+    public void ConfirmNewScroll(int index)
+    {
+        if(currentSelectedScroll == null)
+        {
+            return;
+        }
+
+        
+        PlayerHandler.Instance.playerMagic.ReceiveNewScroll(currentSelectedScroll, index, scrollInventoryItem);
+        UIHolder.instance.uiScroll.ControlAllUnitsAnimation(false);
+        currentSelectedScroll = null;
+    }
+
+    #endregion
+
 }

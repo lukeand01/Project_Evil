@@ -52,7 +52,13 @@ public class PlayerDamageable : MonoBehaviour, IDamageable
             //we do a cool effect.
             //we slow down the game for a moment
             //the player rotates towards the last attacker.
-            handler.playerCombat.ShieldProtectedSomething(damage.attackerRef.transform.position);
+
+            if (!handler.playerCombat.isBlocking)
+            {
+                handler.playerCombat.ShieldProtectedSomething(damage.attackerRef.transform.position);
+            }
+
+            
             return;
         }
 
