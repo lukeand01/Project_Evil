@@ -121,7 +121,15 @@
 
 
 
+//GOAL
+///get pathfind working
+///pathfind takes into consideration terrain. 
+//create a simpler version of the bd system. because it requires very few things that will change stats.
+//create a simple enemy that goes after the player. straighforward.
+//create a enemy that shoots. and tries to keep distance. its not smart enough to flank.
 
+//GOAL TOMORROW
+//check the gun system if i can create the revolver.
 
 
 //should it have mana?
@@ -140,3 +148,32 @@
 //this part of the game will be linear.
 //then he finds a community. and the game becomes about building and helping this community.
 //tehy will help each other to finally leave this place.
+
+
+
+
+//PATHFIND
+//i cannot use my other pathfind because it doesnt work with precise movenet and constnatly changing field.
+
+
+//each item has a craftlist 
+//which requires another item and you can craft by7 clicking on the item that might craft.
+
+
+//MAIN GOALS
+//dashing through enemies affect them.
+//create the weapons
+//create the mechanic for using shields and sword. it must be vital using them
+//create the ability and improve the curse mechanic
+//creat the enemies
+//you can craft things from inventory.
+//then we place everyone in a map with cover. a start point and an end point and we play it out.
+//create stealth mechanics? 
+
+//NEXT MAIN GOALS
+//create a save system
+//create main menu
+//create dialogue system
+
+
+//then after all of that we start creating the chapters.

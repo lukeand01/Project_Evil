@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-
-public class EnemyBase : MonoBehaviour, IDamageable
+using Pathfinding;
+using MyBox;
+public class EnemyBase : MyAIBase
 {
     //this current verisonm will be a test.
     [SerializeField] TextMeshProUGUI DEBUGstaggerText;
@@ -15,6 +16,13 @@ public class EnemyBase : MonoBehaviour, IDamageable
 
         currentHealth = totalHealth;
         totalStagger = 10;
+
+        SetUpAIBase();
+    }
+
+    private void Start()
+    {
+        SetUp();
     }
 
     private void Update()
@@ -27,6 +35,38 @@ public class EnemyBase : MonoBehaviour, IDamageable
         HandleStagger();
     }
 
+    #region SET UP
+    [Separator("SET UP")]
+    [SerializeField] protected EnemyData data;
+
+
+    protected virtual void SetUp()
+    {
+
+    }
+
+    protected override Sequence2 GetBehavior()
+    {
+        return null;
+    }
+
+
+    protected bool IsAttacking;
+    public virtual void CallAttack()
+    {
+        //in here we are going to handle all the logic for attacking.
+        //but here is the thing: i might want enemey to do a bunch of different things.
+        //like target enemy other enemy, 
+        //what dictates if it wanna target someone else 
+
+        //how do i decide when th
+
+
+
+    }
+
+
+    #endregion
 
 
     #region TAKE DAMAGE
@@ -41,12 +81,12 @@ public class EnemyBase : MonoBehaviour, IDamageable
     bool isStaggered;
     bool hasBeenStaggered;
 
-    public string GetDamageableID()
+    public override string GetDamageableID()
     {
         return id;
     }
 
-    public virtual void TakeDamage(DamageClass damage)
+    public override void TakeDamage(DamageClass damage)
     {
         //enough damage will make thisc char stunned for a brief momeent. getting close to a character suchc as this will give the opportunity for the champ to attack 
 
@@ -73,12 +113,12 @@ public class EnemyBase : MonoBehaviour, IDamageable
 
     }
 
-    public bool IsStaggered()
+    public override bool IsStaggered()
     {
         return isStaggered;
     }
 
-    public void ChangeCurseValue(float value)
+    public override void ChangeCurseValue(float value)
     {
         
     }
@@ -132,8 +172,23 @@ public class EnemyBase : MonoBehaviour, IDamageable
 
     #endregion
 
-
     #region ANIMATION
+
+
+    #endregion
+
+
+    #region DEBUG
+    [SerializeField] Transform debugTargetPos;
+    [SerializeField] AIPath debugPathfind;
+
+    [ContextMenu("DEBUG START MOVING")]
+    public void DebugStartMoving()
+    {
+        debugPathfind.destination = debugTargetPos.position;
+    }
+
+    
 
 
     #endregion

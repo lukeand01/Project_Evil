@@ -18,6 +18,7 @@ public class PlayerDamageable : MonoBehaviour, IDamageable
 
     float currentCurse;
 
+    bool isDead;
 
     private void Awake()
     {
@@ -77,6 +78,7 @@ public class PlayerDamageable : MonoBehaviour, IDamageable
     void Die()
     {
         Debug.Log("should die");
+        isDead = true;
     }
 
     public bool IsStaggered()
@@ -95,5 +97,10 @@ public class PlayerDamageable : MonoBehaviour, IDamageable
         }
 
         UIHolder.instance.uiResource.UpdateCursed(currentCurse, totalHealth);
+    }
+
+    public bool IsAlive()
+    {
+        return !isDead;
     }
 }

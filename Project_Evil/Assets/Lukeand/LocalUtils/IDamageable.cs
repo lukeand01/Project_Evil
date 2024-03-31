@@ -11,4 +11,6 @@ public interface IDamageable
 
     public void ChangeCurseValue(float value);
 
+    public bool IsAlive();
+
 }
